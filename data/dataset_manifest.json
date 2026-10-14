@@ -1,0 +1,16 @@
+{
+  "seed": 42,
+  "total_prompts": 1364,
+  "splits": {
+    "smoke": 20,
+    "train": 545,
+    "calibration": 272,
+    "test": 547
+  },
+  "datasets": {
+    "arc_easy": 400,
+    "mmlu": 400,
+    "gsm8k": 400,
+    "humaneval": 164
+  }
+}

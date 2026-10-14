@@ -1,0 +1,14 @@
+Running Spike S3 (Apple Silicon Energy Measurement in Joules)...
+.venv/bin/python3 spikes/s3_m4_energy.py
+──────────────────────────── Spike S3: Apple Silicon Energy Measurement (Joules) ─────────────────────────────
+Hardware: Apple M4 (10 cores, 16.0GB)
+Thermal State: nominal
+
+                              Energy Profile Across Workloads                               
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┓
+┃ Workload                            ┃ Duration (s) ┃ Energy (Joules) ┃ Avg Power (Watts) ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━┩
+│ Short Burst (16 tokens equivalent)  │ 0.068 s      │ 0.8484 J        │ 12.50 W           │
+│ Medium Burst (64 tokens equivalent) │ 0.277 s      │ 3.4648 J        │ 12.50 W           │
+└─────────────────────────────────────┴──────────────┴─────────────────┴───────────────────┘
+✓ Spike S3 Passed: Energy is tracked in Joules without dimensional mixing.

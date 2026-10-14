@@ -1,0 +1,34 @@
+# Python & Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Environment and Secrets
+.env
+.env.local
+
+# Traces & Local DBs (large generated artifacts)
+*.sqlite
+*.sqlite3
+*.db
+traces/
+cache/
+
+# Test & coverage caches
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/
+
+# Editor artifacts
+.vscode/
+.idea/

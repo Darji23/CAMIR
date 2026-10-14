@@ -1,0 +1,39 @@
+[project]
+name = "camir"
+version = "0.1.0"
+description = "Cost-Aware Multi-Model Inference Router"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Abhishek Darji" },
+    { name = "Aniket Anil Naik" },
+    { name = "Tamizh Selvan Manivannan" }
+]
+dependencies = [
+    "pydantic>=2.7.0",
+    "mlx>=0.22.0",
+    "mlx-lm>=0.21.0",
+    "datasets>=2.19.0",
+    "pyarrow>=15.0.0",
+    "openai>=1.30.0",
+    "requests>=2.31.0",
+    "tqdm>=4.66.0",
+    "pandas>=2.2.0",
+    "duckdb>=1.0.0",
+    "rich>=13.7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.4.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

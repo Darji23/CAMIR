@@ -1,0 +1,60 @@
+────────────────────────────────── CAMIR Phase 1: 20-Prompt Smoke Pipeline ───────────────────────────────────
+Loaded 20 smoke prompts from smoke_20.jsonl
+Hardware: Apple M4 (10 cores, 16.0GB) | Thermal State: nominal
+
+Large Tier: qwen/qwen-2.5-72b-instruct (Mock Mode)
+Small Tier: mlx-community/Qwen2.5-1.5B-Instruct-4bit (MLX-LM Local)
+Processing smoke prompts... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:36
+                                       Smoke Pipeline Execution Summary                                       
+┏━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━┓
+┃             ┃           ┃       ┃ Tokens       ┃           ┃ Total Lat   ┃            ┃           ┃        ┃
+┃ Prompt ID   ┃ Dataset   ┃ Tier  ┃ (In/Out)     ┃ TTFT (ms) ┃ (ms)        ┃ Energy (J) ┃ Cost ($)  ┃ Status ┃
+┡━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━┩
+│ arc_ACTAAP… │ arc_easy  │ small │ 38/64        │ 103.2     │ 1416.3      │ 17.70 J    │ $0.0000   │ VALID  │
+│ arc_ACTAAP… │ arc_easy  │ large │ 24/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000012 │ VALID  │
+│ arc_Mercur… │ arc_easy  │ small │ 41/64        │ 149.4     │ 1399.2      │ 17.49 J    │ $0.0000   │ VALID  │
+│ arc_Mercur… │ arc_easy  │ large │ 26/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000013 │ VALID  │
+│ arc_NYSEDR… │ arc_easy  │ small │ 56/64        │ 212.6     │ 1567.5      │ 19.59 J    │ $0.0000   │ VALID  │
+│ arc_NYSEDR… │ arc_easy  │ large │ 36/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000016 │ VALID  │
+│ arc_Mercur… │ arc_easy  │ small │ 47/64        │ 187.8     │ 1803.2      │ 22.54 J    │ $0.0000   │ VALID  │
+│ arc_Mercur… │ arc_easy  │ large │ 32/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000015 │ VALID  │
+│ arc_Mercur… │ arc_easy  │ small │ 55/64        │ 198.1     │ 1447.0      │ 18.09 J    │ $0.0000   │ VALID  │
+│ arc_Mercur… │ arc_easy  │ large │ 43/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000019 │ VALID  │
+│ mmlu_high_… │ mmlu      │ small │ 55/64        │ 196.3     │ 1469.0      │ 18.36 J    │ $0.0000   │ VALID  │
+│ mmlu_high_… │ mmlu      │ large │ 39/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000017 │ VALID  │
+│ mmlu_logic… │ mmlu      │ small │ 71/64        │ 235.8     │ 1502.4      │ 18.78 J    │ $0.0000   │ VALID  │
+│ mmlu_logic… │ mmlu      │ large │ 53/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000022 │ VALID  │
+│ mmlu_colle… │ mmlu      │ small │ 126/64       │ 293.5     │ 1542.4      │ 19.28 J    │ $0.0000   │ VALID  │
+│ mmlu_colle… │ mmlu      │ large │ 99/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000038 │ VALID  │
+│ mmlu_human… │ mmlu      │ small │ 72/64        │ 233.4     │ 1559.2      │ 19.49 J    │ $0.0000   │ VALID  │
+│ mmlu_human… │ mmlu      │ large │ 54/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000023 │ VALID  │
+│ mmlu_socio… │ mmlu      │ small │ 87/64        │ 320.3     │ 1642.3      │ 20.53 J    │ $0.0000   │ VALID  │
+│ mmlu_socio… │ mmlu      │ large │ 57/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000024 │ VALID  │
+│ gsm8k_0616  │ gsm8k     │ small │ 81/64        │ 331.3     │ 1762.4      │ 22.03 J    │ $0.0000   │ VALID  │
+│ gsm8k_0616  │ gsm8k     │ large │ 61/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000025 │ VALID  │
+│ gsm8k_1238  │ gsm8k     │ small │ 95/64        │ 278.4     │ 1665.1      │ 20.81 J    │ $0.0000   │ VALID  │
+│ gsm8k_1238  │ gsm8k     │ large │ 65/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000026 │ VALID  │
+│ gsm8k_1104  │ gsm8k     │ small │ 57/64        │ 181.6     │ 1525.7      │ 19.07 J    │ $0.0000   │ VALID  │
+│ gsm8k_1104  │ gsm8k     │ large │ 43/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000019 │ VALID  │
+│ gsm8k_0993  │ gsm8k     │ small │ 120/64       │ 321.1     │ 1684.5      │ 21.06 J    │ $0.0000   │ VALID  │
+│ gsm8k_0993  │ gsm8k     │ large │ 100/9        │ 50.0      │ 70.0        │ 0.00 J     │ $0.000039 │ VALID  │
+│ gsm8k_0079  │ gsm8k     │ small │ 78/64        │ 239.7     │ 1697.5      │ 21.22 J    │ $0.0000   │ VALID  │
+│ gsm8k_0079  │ gsm8k     │ large │ 53/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000022 │ VALID  │
+│ humaneval_… │ humaneval │ small │ 118/64       │ 346.1     │ 1731.4      │ 21.64 J    │ $0.0000   │ VALID  │
+│ humaneval_… │ humaneval │ large │ 46/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000020 │ VALID  │
+│ humaneval_… │ humaneval │ small │ 109/64       │ 290.8     │ 1531.6      │ 19.14 J    │ $0.0000   │ VALID  │
+│ humaneval_… │ humaneval │ large │ 74/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000029 │ VALID  │
+│ humaneval_… │ humaneval │ small │ 80/64        │ 236.0     │ 1581.2      │ 19.77 J    │ $0.0000   │ VALID  │
+│ humaneval_… │ humaneval │ large │ 45/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000019 │ VALID  │
+│ humaneval_… │ humaneval │ small │ 113/64       │ 505.7     │ 2286.2      │ 28.58 J    │ $0.0000   │ VALID  │
+│ humaneval_… │ humaneval │ large │ 69/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000028 │ VALID  │
+│ humaneval_… │ humaneval │ small │ 111/64       │ 471.9     │ 1926.9      │ 24.09 J    │ $0.0000   │ VALID  │
+│ humaneval_… │ humaneval │ large │ 60/9         │ 50.0      │ 70.0        │ 0.00 J     │ $0.000025 │ VALID  │
+└─────────────┴───────────┴───────┴──────────────┴───────────┴─────────────┴────────────┴───────────┴────────┘
+
+✓ Phase 1 Exit Gate Satisfied!
+Total Prompts Processed: 20
+Total Trace Rows Validated: 40/40
+SQLite Store: /Users/abhishekdarji/MyDrive/CAMIR/traces/camir_traces.sqlite (40 total rows)
+Parquet Export: /Users/abhishekdarji/MyDrive/CAMIR/traces/smoke_traces.parquet (40 rows)
+
