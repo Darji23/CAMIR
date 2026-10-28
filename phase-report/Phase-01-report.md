@@ -48,22 +48,28 @@ In accordance with Section 7 of the project proposal, a stratified benchmark dat
 
 ### 3.1 Trace Schema Contract (`camir/traces/schema.py`)
 Every inference call produces a `TierResult` (in-memory) that serializes into an immutable `TraceRow` (persistent storage). The contract captures:
-1. **Identifiers:** `trace_id`, `prompt_id`, `dataset`, `tier`, `model_id`, and `config_hash`.
+1. **Identifiers:** `trace_id`, `prompt_id`, `dataset`, `tier` (`small`, `medium`, or `large`), `model_id`, and `config_hash`.
 2. **Text:** Exact prompt and generated completion.
 3. **Statistical Confidence Signals:**
    * Token-level log-probabilities
    * Mean log-probability
    * Minimum log-probability
    * Top-1 vs Top-2 logit margin (key signal for C2/P3/P4)
+   * `answer_token_logprob`: Separately extracted log-probability of the specific choice token (A, B, C, D) for multiple-choice datasets (ARC-Easy, MMLU).
 4. **Three Independent Accounting Dimensions:**
    * **Latency (Seconds):** `t_load_s` (isolated), `t_prefill_s`, `t_ttft_s`, `t_decode_s`, `t_total_s`, and `tpot_s`.
    * **Cost (USD):** Calculated token cost based on published API tariffs (\$0.00 for local models).
-   * **Energy (Joules):** Package energy consumed on Apple Silicon hardware.
+   * **Energy (Joules):** Explicitly labeled as **estimated** (constant 12.5 W active power × time) or measured.
    * *Strict Rule Enforced:* Dollars, seconds, and Joules are never added together.
+5. **System & Reproducibility Guarantees:**
+   * `cache_disabled: True`: KV/prompt caching explicitly disabled for timing integrity.
+   * `thermal_state`: Monitored and logged on every timing row.
+   * `config_hash`: Canonical SHA256 hash covering model, quantization, max tokens, temperature, prompt template, and library versions.
 
-### 3.2 Dual Storage Engine (`camir/traces/store.py`)
+### 3.2 Dual Storage Engine (`camir/traces/store.py`) & Checkpoint System
 * **SQLite Database (`traces/camir_traces.sqlite`):** Provides transactional row writes and fast lookups indexed on `(prompt_id, tier, config_hash)`.
 * **Columnar Parquet Export (`traces/smoke_traces.parquet`):** DuckDB/PyArrow columnar format for high-speed offline replay in Phase 2.
+* **Phase Checkpoints (`checkpoints/phase_1/`):** Outputs and complete console execution logs stored as `.txt` files in `console_logs/` and `outputs/` for long-term reference.
 
 ---
 
@@ -204,17 +210,17 @@ The resulting repository structure aligns with the architecture specified in the
 
 ```
 CAMIR/
-├── Makefile                        # Unified task runner (make test, spike*, smoke)
+├── Makefile                        # Unified task runner (make test, spike*, smoke, clean-results)
 ├── pyproject.toml                  # Pinned Python 3.11 environment configuration
-├── SETUP.md                        # Complete step-by-step setup and execution guide
-├── README.md                       # High-level project summary
+├── README.md                       # Complete setup, execution, architecture, and config guide
 ├── .env.example                    # API credentials template
+├── checkpoints/                    # Structured .txt outputs and console logs by phase
+│   └── phase_1/
+│       ├── console_logs/           # Full terminal logs (.txt)
+│       └── outputs/                # Structured metrics and summary reports (.txt)
 ├── phase-report/
 │   └── Phase-01-report.md          # [This Report]
 ├── logs/                           # Auto-saved terminal logs
-│   ├── spike1.log                  # Spike S1 output
-│   ├── spike2.log                  # Spike S2 output
-│   └── spike3.log                  # Spike S3 output
 ├── data/                           # Downloaded & stratified benchmarks
 │   ├── smoke_20.jsonl              # 20-prompt smoke test set
 │   ├── train.jsonl                 # 545 prompts (40% train split)

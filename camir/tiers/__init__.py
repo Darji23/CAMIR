@@ -2,6 +2,6 @@
 
 from camir.tiers.base import BaseTier
 from camir.tiers.hosted_api import HostedAPITier
-from camir.tiers.mlx_local import LocalMLXTier
+from camir.tiers.mlx_local import LocalMLXTier, MediumMLXTier
 
-__all__ = ["BaseTier", "LocalMLXTier", "HostedAPITier"]
+__all__ = ["BaseTier", "LocalMLXTier", "MediumMLXTier", "HostedAPITier"]

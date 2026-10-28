@@ -42,6 +42,8 @@ def compute_timing_breakdown(
     t_ttft_s: float,
     t_decode_s: float,
     output_tokens: int,
+    cache_disabled: bool = True,
+    thermal_state: str = "nominal",
 ) -> TimingBreakdown:
     """Compute normalized timing metrics."""
     t_total_s = t_prefill_s + t_decode_s
@@ -54,4 +56,6 @@ def compute_timing_breakdown(
         t_decode_s=max(0.0, t_decode_s),
         t_total_s=max(0.0, t_total_s),
         tpot_s=max(0.0, tpot_s),
+        cache_disabled=cache_disabled,
+        thermal_state=thermal_state,
     )

@@ -12,6 +12,7 @@ from camir.accounting.energy import EnergyTracker
 from camir.accounting.timing import compute_timing_breakdown
 from camir.tiers.base import BaseTier
 from camir.traces.schema import TierResult, TimingBreakdown, TokenLogprob
+from camir.utils.hardware import get_thermal_state
 
 
 class LocalMLXTier(BaseTier):
@@ -209,6 +210,8 @@ class LocalMLXTier(BaseTier):
             t_ttft_s=t_ttft_s,
             t_decode_s=t_decode_s,
             output_tokens=output_token_count,
+            cache_disabled=True,
+            thermal_state=get_thermal_state(),
         )
 
         return TierResult(
@@ -221,4 +224,20 @@ class LocalMLXTier(BaseTier):
             model_id=self._model_id,
             finish_reason="stop" if len(generated_tokens) < max_tokens else "length",
             energy_j=energy_ctx.energy_j,
+            energy_method=energy_ctx.energy_method,
         )
+
+
+class MediumMLXTier(LocalMLXTier):
+    """Local Medium Tier running 4-bit quantized Qwen2.5-7B on Apple Silicon.
+    
+    Serves as the local fallback verifier for verification-based escalation (P5).
+    """
+
+    def __init__(
+        self,
+        model_id: str = "mlx-community/Qwen2.5-7B-Instruct-4bit",
+        tier_name: str = "medium",
+    ):
+        super().__init__(model_id=model_id, tier_name=tier_name)
+

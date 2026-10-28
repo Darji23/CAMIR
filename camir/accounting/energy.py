@@ -2,6 +2,9 @@
 
 Measures or estimates energy consumption during inference.
 Important rule: Dollars, seconds, and Joules are NEVER added together.
+
+Energy is explicitly labeled as 'estimated' (constant 12.5 W × time) or
+'measured' (via powermetrics when available).
 """
 
 import os
@@ -11,17 +14,21 @@ from typing import Optional
 
 
 class EnergyTracker:
-    """Context manager to measure or estimate package energy in Joules."""
+    """Context manager to measure or estimate package energy in Joules.
+    
+    Defaults to calibrated constant 12.5 W on Apple Silicon M4.
+    Every calculated energy is explicitly tagged with its method ('estimated' or 'measured').
+    """
 
-    # Typical active power profiles for Apple Silicon M4 running quantized LLM inference
-    # Baseline idle ~1.5W; M4 under 4-bit MLX decode ~12.5W active power.
-    ESTIMATED_M4_ACTIVE_WATTS = 12.5
+    # Calibrated active power profile for Apple Silicon M4 running 4-bit quantized MLX decode: 12.5 W
+    ESTIMATED_M4_ACTIVE_WATTS: float = 12.5
 
     def __init__(self, use_powermetrics: bool = False):
         self.use_powermetrics = use_powermetrics
         self._start_time: Optional[float] = None
         self._end_time: Optional[float] = None
         self.energy_j: Optional[float] = None
+        self.energy_method: str = "estimated"  # "estimated" | "measured"
 
     def __enter__(self):
         self._start_time = time.perf_counter()
@@ -34,10 +41,24 @@ class EnergyTracker:
         if self.use_powermetrics:
             # Attempt powermetrics reading if configured
             measured = self._read_powermetrics_joules(elapsed_s)
-            self.energy_j = measured if measured is not None else (elapsed_s * self.ESTIMATED_M4_ACTIVE_WATTS)
+            if measured is not None:
+                self.energy_j = measured
+                self.energy_method = "measured"
+            else:
+                self.energy_j = round(elapsed_s * self.ESTIMATED_M4_ACTIVE_WATTS, 4)
+                self.energy_method = "estimated"
         else:
-            # Calibrated model: Energy (Joules) = Power (Watts) * Time (Seconds)
+            # Calibrated model: Energy (Joules) = Power (12.5 Watts) * Time (Seconds)
             self.energy_j = round(elapsed_s * self.ESTIMATED_M4_ACTIVE_WATTS, 4)
+            self.energy_method = "estimated"
+
+    @property
+    def label(self) -> str:
+        """Formatted human-readable string with explicit estimated/measured label."""
+        val = f"{self.energy_j:.4f} J" if self.energy_j is not None else "N/A"
+        if self.energy_method == "estimated":
+            return f"{val} (estimated, {self.ESTIMATED_M4_ACTIVE_WATTS}W)"
+        return f"{val} (measured)"
 
     def _read_powermetrics_joules(self, elapsed_s: float) -> Optional[float]:
         """Try non-blocking powermetrics sample if permitted."""

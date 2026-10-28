@@ -132,6 +132,7 @@ class HostedAPITier(BaseTier):
                 model_id=self._model_id,
                 finish_reason=finish_reason,
                 energy_j=0.0,  # Hosted API does not consume local battery energy
+                energy_method="estimated",
                 raw_response_metadata={"hosted": True, "provider_id": response.id},
             )
 
@@ -156,6 +157,8 @@ class HostedAPITier(BaseTier):
             t_decode_s=0.03,
             t_total_s=0.07,
             tpot_s=0.003,
+            cache_disabled=True,
+            thermal_state="nominal",
         )
 
         return TierResult(
@@ -168,5 +171,6 @@ class HostedAPITier(BaseTier):
             model_id=self._model_id,
             finish_reason="stop",
             energy_j=0.0,
+            energy_method="estimated",
             raw_response_metadata={"mock": True},
         )
