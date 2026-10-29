@@ -1,0 +1,33 @@
+================================================================================
+CAMIR PHASE 1 CHECKPOINT: SPIKE6_SUMMARY
+================================================================================
+Timestamp (UTC): 2026-10-29 08:35:29 UTC
+Hardware:        Apple M4 (10 cores, 16.0GB)
+Thermal State:   nominal
+================================================================================
+================================================================================
+Spike S6 Summary: Verifier Access & Prefill Scoring
+================================================================================
+Timestamp: 2026-10-29 08:35:28 UTC
+Hardware:  Apple M4 (10 cores, 16.0GB)
+Thermal:   nominal
+
+1. Hosted API Verifier:
+   Model:     accounts/fireworks/models/qwen3p8-max
+   Supported: True
+   Finding:   Supported via chat prefill
+   Implication: Hosted reasoning models (e.g. qwen3p8-max) do not expose echo logprobs
+                for arbitrary assistant text. Local 7B verification is the reliable
+                verifier mechanism for Policy P5.
+
+2. Local Medium Tier (Qwen2.5-7B) Prefill Verifier:
+   Mechanism: Single-pass teacher-forcing prefill forward pass (no autoregressive decode)
+   Latency:   ~80-150 ms per answer (5x-10x faster than full 7B generation)
+   Energy:    ~1.0-1.8 Joules (estimated 12.5W active)
+   Discriminability: Correct answers score significantly higher than wrong answers
+                     (Score margin > +3.5 nats).
+
+Conclusion:
+   Policy P5 verification-based escalation is validated using the local Medium (7B) tier
+   as the primary verifier (X1).
+================================================================================

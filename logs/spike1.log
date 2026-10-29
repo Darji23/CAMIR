@@ -1,0 +1,50 @@
+─────────────────────────────── Spike S1: MLX-LM Log-prob & Margin Extraction ────────────────────────────────
+Loading model: mlx-community/Qwen2.5-1.5B-Instruct-4bit...
+✓ Model loaded in 3.38s (isolated)
+
+Prompt:
+Question: What is the powerhouse of the cell?
+Choices:
+(A) Nucleus
+(B) Mitochondria
+(C) Ribosome
+(D) Golgi
+Answer:
+
+Generating with logprob and margin tracking (cache disabled)...
+Completion: B
+Explanation: The powerhouse of the cell is the mitochondria. Mitochondria are the energy-producing structures 
+in cells, where the process of cellular respiration
+
+                  Timing Breakdown (Rules Enforced)                  
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Metric                       ┃ Value                              ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Model Load Time              │ 3.378 s (isolated)                 │
+│ Time To First Token (TTFT)   │ 94.7 ms                            │
+│ Decode Latency               │ 491.6 ms                           │
+│ Total Latency                │ 586.3 ms                           │
+│ Time Per Output Token (TPOT) │ 15.86 ms/token                     │
+│ Energy (Joules)              │ 7.3291 J (estimated, 12.5W active) │
+│ Cache Disabled               │ True                               │
+│ Thermal State                │ nominal                            │
+└──────────────────────────────┴────────────────────────────────────┘
+       Token Log-probabilities & Top-2 Margins        
+┏━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━┓
+┃ Token ID ┃ Token Text    ┃ Log-prob ┃ Top-2 Margin ┃
+┡━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━┩
+│ 425      │ ' B'          │ -0.8125  │ 0.0938       │
+│ 198      │ '\n'          │ -0.8125  │ 0.4844       │
+│ 69769    │ 'Explanation' │ -0.7188  │ 1.3906       │
+│ 25       │ ':'           │ -0.4844  │ 1.0781       │
+│ 576      │ ' The'        │ -0.6719  │ 0.1875       │
+│ 74114    │ ' powerhouse' │ -0.2812  │ 1.7812       │
+│ 315      │ ' of'         │ 0.0000   │ 7.2656       │
+│ 279      │ ' the'        │ -0.0156  │ 5.0156       │
+│ 2779     │ ' cell'       │ 0.0000   │ 7.2188       │
+│ 374      │ ' is'         │ -0.2031  │ 1.5312       │
+└──────────┴───────────────┴──────────┴──────────────┘
+
+✓ Spike S1 Passed: MLX-LM provides logprobs and margins cleanly.
+Checkpoint saved: /Users/abhishekdarji/MyDrive/CAMIR/checkpoints/phase_1/outputs/spike1_summary.txt
+

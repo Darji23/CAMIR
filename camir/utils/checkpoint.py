@@ -88,12 +88,23 @@ class CheckpointManager:
             f.write(content)
         return path
 
+    def save_output(
+        self,
+        output_name: str,
+        content: str,
+        metadata: Optional[Dict[str, Any]] = None,
+    ) -> Path:
+        """Save an output checkpoint, stripping any trailing .txt if present."""
+        clean_name = output_name[:-4] if output_name.endswith(".txt") else output_name
+        return self.save_output_checkpoint(clean_name, content, metadata=metadata)
+
     def save_output_checkpoint(
         self,
         output_name: str,
         content: str,
         metadata: Optional[Dict[str, Any]] = None,
     ) -> Path:
+
         """Save a human-readable text checkpoint with system metadata header."""
         path = self.get_output_path(output_name)
         timestamp_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")

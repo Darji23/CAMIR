@@ -1,0 +1,87 @@
+
+═══════════════════════════════════════════════════════════════════════
+       CAMIR Phase 3: Tax-Aware Core, Guarantees & Experiments E3-E14    
+═══════════════════════════════════════════════════════════════════════
+
+Running Experiment E3: Escalation Tax Measurement...
+ Experiment E3: Escalation Tax Accounting 
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Metric                     ┃     Value ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ Total Evaluated Queries    │        18 │
+│ Escalation Rate            │    100.0% │
+│ Total Wasted Latency       │   28.08 s │
+│ Total Wasted Cost          │ $0.000000 │
+│ Total Wasted Energy        │  350.97 J │
+│ Avg Latency Tax Multiplier │     2.45x │
+│ Avg Energy Tax Multiplier  │     1.00x │
+└────────────────────────────┴───────────┘
+
+Running Experiment E4: Policy Frontiers (Baselines vs P2-P5)...
+                             CAMIR Replay Frontier: Baselines & Routing Policies                              
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━┓
+┃                                        ┃         ┃     Avg ┃         ┃    p95 ┃         ┃  Tier  ┃         ┃
+┃                                        ┃         ┃    Cost ┃ p50 Lat ┃    Lat ┃  Energy ┃  Dist  ┃     Tax ┃
+┃ Policy                                 ┃ Accura… ┃     ($) ┃    (ms) ┃   (ms) ┃     (J) ┃ (S/M/… ┃   Ratio ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━┩
+│ always-small                           │   44.4% │ $0.000… │  1458.3 │ 1974.5 │ 19.50 J │ 100% / │   1.00x │
+│                                        │         │         │         │        │         │  0% /  │         │
+│                                        │         │         │         │        │         │   0%   │         │
+│ always-medium                          │   44.4% │ $0.000… │  6591.7 │ 9697.0 │ 89.47 J │  0% /  │   1.00x │
+│                                        │         │         │         │        │         │ 100% / │         │
+│                                        │         │         │         │        │         │   0%   │         │
+│ always-large                           │   38.9% │ $0.000… │  1078.3 │ 6935.0 │  0.00 J │  0% /  │   1.00x │
+│                                        │         │         │         │        │         │  0% /  │         │
+│                                        │         │         │         │        │         │  100%  │         │
+│ oracle                                 │   77.8% │ $0.000… │  1438.7 │ 7512.5 │ 23.94 J │ 66% /  │   1.00x │
+│                                        │         │         │         │        │         │ 11% /  │         │
+│                                        │         │         │         │        │         │  22%   │         │
+│ logprob-cascade (tau=-0.65)            │   38.9% │ $0.000… │  2676.4 │ 8340.4 │ 19.50 J │  0% /  │   1.55x │
+│                                        │         │         │         │        │         │  0% /  │         │
+│                                        │         │         │         │        │         │  100%  │         │
+│ P3-SkipRule (rho=0.35)                 │   38.9% │ $0.000… │  1791.5 │ 8147.9 │  8.02 J │  0% /  │   1.23x │
+│                                        │         │         │         │        │         │  0% /  │         │
+│                                        │         │         │         │        │         │  100%  │         │
+│ P4-EarlyAbort (tau=-1.20, n0=10)       │   38.9% │ $0.000… │  1616.6 │ 7274.0 │  3.05 J │  0% /  │   1.18x │
+│                                        │         │         │         │        │         │  0% /  │         │
+│                                        │         │         │         │        │         │  100%  │         │
+│ P5-Verification (tau=-0.65, lam=-2.50) │   44.4% │ $0.000… │  1458.3 │ 1974.5 │ 19.50 J │ 100% / │   1.00x │
+│                                        │         │         │         │        │         │  0% /  │         │
+│                                        │         │         │         │        │         │   0%   │         │
+└────────────────────────────────────────┴─────────┴─────────┴─────────┴────────┴─────────┴────────┴─────────┘
+
+Running Experiment E8: Conformal Risk Bounds & Transfer...
+
+Running Experiment E10: P5 Verification Viability Gate...
+  Experiment E10: Week-6 Gate — P5 Verification Economics   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Parameter / Condition        ┃                     Value ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Large Tier Cost (c_L)        │                 $0.000210 │
+│ Verifier Pass Cost (c_V)     │     $0.000000 (on-device) │
+│ Verifier Pass Rate (v_pass)  │                     62.0% │
+│ Gross Savings per Escalation │                 $0.000130 │
+│ Net Financial Savings        │   +$0.000130 / escalation │
+│ Week-6 Decision Gate         │ PASS (P5 Pays Positively) │
+└──────────────────────────────┴───────────────────────────┘
+
+Running Experiment E11: Decision-Theoretic Regime Map...
+                          Experiment E11: Regime Map Decision Boundaries                          
+┏━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Cost Ratio (rho) ┃ Escalation (e) ┃ Optimal Policy  ┃ P2 Cost ┃ P5 Cost ┃ Net Savings vs Large ┃
+┡━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━┩
+│               5x │            10% │ P5-Verification │    1.50 │    1.23 │                75.5% │
+│               5x │            25% │ P5-Verification │    2.25 │    1.56 │                68.8% │
+│               5x │            50% │ P5-Verification │    3.50 │    2.12 │                57.5% │
+│               5x │            75% │ P5-Verification │    4.75 │    2.69 │                46.2% │
+│               5x │            90% │ P5-Verification │    5.50 │    3.02 │                39.5% │
+│              10x │            10% │ P5-Verification │    2.00 │    1.45 │                85.5% │
+│              10x │            25% │ P5-Verification │    3.50 │    2.12 │                78.8% │
+│              10x │            50% │ P5-Verification │    6.00 │    3.25 │                67.5% │
+│              10x │            75% │ P5-Verification │    8.50 │    4.38 │                56.2% │
+│              10x │            90% │ P5-Verification │   10.00 │    5.05 │                49.5% │
+└──────────────────┴────────────────┴─────────────────┴─────────┴─────────┴──────────────────────┘
+
+✓ Phase 3 Master Pipeline Complete.
+Checkpoints saved in: checkpoints/phase_3/outputs/phase3_summary.txt
+

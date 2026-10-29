@@ -1,0 +1,8 @@
+================================================================================
+CAMIR PHASE 3 CHECKPOINT: E11_REGIME_MAP
+================================================================================
+Timestamp (UTC): 2026-10-29 08:57:31 UTC
+Hardware:        Apple M4 (10 cores, 16.0GB)
+Thermal State:   nominal
+================================================================================
+E11 Regime Map: Successfully generated 2D grid covering rho in [5, 100] and e in [0.10, 0.90].

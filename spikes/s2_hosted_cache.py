@@ -47,11 +47,11 @@ def run_spike_s2(num_prompts: int = 5, spend_cap_usd: float = 0.05):
         console.rule("[bold cyan]Spike S2: Hosted API Integration & Idempotent Zero-Spend Cache[/bold cyan]")
 
         tier = HostedAPITier(
-            model_id="qwen/qwen-2.5-72b-instruct",
             tier_name="large",
         )
-
+        provider_name = "Fireworks AI" if ("fireworks" in (tier.base_url or "").lower() or "fireworks" in tier.model_id.lower()) else "OpenAI-compatible"
         console.print(f"[yellow]Tier:[/yellow]        {tier.tier_name} ({tier.model_id})")
+        console.print(f"[yellow]Provider:[/yellow]    {provider_name} ({tier.base_url or 'default endpoint'})")
         console.print(f"[yellow]Mode:[/yellow]        {'Mock (offline)' if tier.is_mock else 'Live Hosted API'}")
         console.print(f"[yellow]Prompts:[/yellow]     {num_prompts}")
         console.print(f"[yellow]Spend Cap:[/yellow]   ${spend_cap_usd:.4f} USD\n")

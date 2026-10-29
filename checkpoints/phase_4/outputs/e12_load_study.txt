@@ -1,0 +1,27 @@
+================================================================================
+CAMIR PHASE 4 CHECKPOINT: E12_LOAD_STUDY
+================================================================================
+Timestamp (UTC): 2026-10-29 09:17:42 UTC
+Hardware:        Apple M4 (10 cores, 16.0GB)
+Thermal State:   nominal
+================================================================================
+================================================================================
+CAMIR Phase 4 Experiment E12: Trace-Driven Queuing Simulation & Load Study
+================================================================================
+Model: Single local Metal GPU stream (1 concurrency) + 10-concurrency hosted API
+
+Always-Small (1.5B)       | λ=0.2 qps | p50=1459.4 ms | p95=2728.9 ms | Wait= 382.7 ms | Util= 16.7%
+Always-Small (1.5B)       | λ=0.5 qps | p50=1835.8 ms | p95=6337.4 ms | Wait=1144.0 ms | Util= 77.6%
+Always-Small (1.5B)       | λ=1.0 qps | p50=15220.5 ms | p95=24905.3 ms | Wait=13761.9 ms | Util= 99.0%
+Always-Small (1.5B)       | λ=2.0 qps | p50=75414.8 ms | p95=145281.8 ms | Wait=75266.3 ms | Util= 99.9%
+Always-Small (1.5B)       | λ=5.0 qps | p50=202729.8 ms | p95=376254.1 ms | Wait=200156.5 ms | Util=100.0%
+Always-Large (Hosted)     | λ=0.2 qps | p50=3335.0 ms | p95=20134.9 ms | Wait=   0.0 ms | Util=  0.0%
+Always-Large (Hosted)     | λ=0.5 qps | p50=1450.4 ms | p95=27334.8 ms | Wait=   0.0 ms | Util=  0.0%
+Always-Large (Hosted)     | λ=1.0 qps | p50= 982.2 ms | p95=27334.8 ms | Wait=   0.0 ms | Util=  0.0%
+Always-Large (Hosted)     | λ=2.0 qps | p50=1118.9 ms | p95=12934.9 ms | Wait=  12.1 ms | Util=  0.0%
+Always-Large (Hosted)     | λ=5.0 qps | p50=6944.9 ms | p95=16350.6 ms | Wait=5275.7 ms | Util=  0.0%
+CAMIR P5 (Verification)   | λ=0.2 qps | p50=1459.4 ms | p95=2728.9 ms | Wait= 382.7 ms | Util= 16.7%
+CAMIR P5 (Verification)   | λ=0.5 qps | p50=1835.8 ms | p95=6337.4 ms | Wait=1144.0 ms | Util= 77.6%
+CAMIR P5 (Verification)   | λ=1.0 qps | p50=15220.5 ms | p95=24905.3 ms | Wait=13761.9 ms | Util= 99.0%
+CAMIR P5 (Verification)   | λ=2.0 qps | p50=75414.8 ms | p95=145281.8 ms | Wait=75266.3 ms | Util= 99.9%
+CAMIR P5 (Verification)   | λ=5.0 qps | p50=202729.8 ms | p95=376254.1 ms | Wait=200156.5 ms | Util=100.0%

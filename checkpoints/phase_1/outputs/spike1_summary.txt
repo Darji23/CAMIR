@@ -1,0 +1,25 @@
+================================================================================
+CAMIR PHASE 1 CHECKPOINT: SPIKE1_SUMMARY
+================================================================================
+Timestamp (UTC): 2026-10-29 08:30:59 UTC
+Hardware:        Apple M4 (10 cores, 16.0GB)
+Thermal State:   nominal
+--------------------------------------------------------------------------------
+METADATA & PARAMETERS:
+  status: PASSED
+  model_id: mlx-community/Qwen2.5-1.5B-Instruct-4bit
+================================================================================
+Spike S1 Findings:
+- Model: mlx-community/Qwen2.5-1.5B-Instruct-4bit
+- Load Latency: 3.378 s (isolated)
+- Generation Latency: 586.3 ms
+- TTFT: 94.7 ms
+- TPOT: 15.86 ms/token
+- Energy: 7.3291 J (estimated, 12.5 W active)
+- Cache Disabled: True
+- Extracted Tokens Preview:
+  ' B': logprob=-0.8125, margin=0.0938
+  '\n': logprob=-0.8125, margin=0.4844
+  'Explanation': logprob=-0.7188, margin=1.3906
+  ':': logprob=-0.4844, margin=1.0781
+  ' The': logprob=-0.6719, margin=0.1875

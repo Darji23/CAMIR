@@ -1,0 +1,55 @@
+
+──────────────────────────────────────────────────────────────────────
+  CAMIR Full Dataset Pipeline — 11 Sources (CAMIR_Project_Proposal_v3)
+──────────────────────────────────────────────────────────────────────
+
+[1/10] ARC-Easy …
+       → 400 prompts
+[2/10] MMLU …
+       → 400 prompts across 57 subjects
+[3/10] GSM8K …
+       → 400 prompts
+[4/10] HumanEval …
+       → 164 prompts
+[5/10] MATH-500 (Levels 4–5) …
+       [WARN] lighteval/MATH failed (Dataset 'lighteval/MATH' doesn't exist on the Hub or cannot be accessed.); trying hendrycks/competition_math …
+       [WARN] MATH fallback also failed (Dataset 'hendrycks/competition_math' doesn't exist on the Hub or cannot be accessed.); skipping MATH-500.
+       → 0 hard math prompts (Levels 4–5)
+[6/10] MMLU-Pro …
+       → 400 prompts
+[7/10] BigCodeBench …
+       → 150 prompts
+[8/10] WildChat …
+       → 250 chat prompts
+[9/10] IFEval …
+       → 541 IFEval prompts
+[10/10] Tool-Use (BFCL-v3) …
+       [WARN] BFCL failed (No (supported) data files found in gorilla-llm/Berkeley-Function-Calling-Leaderboard); generating synthetic tool-use fallback …
+       → 200 tool-use prompts
+
+Total corpus: 2905 prompts across all 10 sources.
+
+Saving splits …
+  Saved    18 records → smoke_20.jsonl
+  Saved  1154 records → train.jsonl
+  Saved   577 records → calibration.jsonl
+  Saved  1156 records → test.jsonl
+  Saved manifest → dataset_manifest.json
+
+──────────────────────────────────────────────────────────────────────
+Dataset              Scorer              Prompts
+──────────────────────────────────────────────────────────────────────
+  arc_easy           multiple_choice         400
+  bfcl               tool_use                200
+  bigcodebench       code                    150
+  gsm8k              math                    400
+  humaneval          code                    164
+  ifeval             ifeval                  541
+  mmlu               multiple_choice         400
+  mmlu_pro           multiple_choice         400
+  wildchat           pairwise_judge          250
+──────────────────────────────────────────────────────────────────────
+  TOTAL              —                      2905
+──────────────────────────────────────────────────────────────────────
+
+✓ Dataset pipeline complete. 2905 prompts in data/

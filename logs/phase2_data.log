@@ -1,0 +1,46 @@
+
+──────────────────────────────────────────────────────────────────────
+  CAMIR Phase 2: Data Pipeline — All 10 Sources + Group-Aware Splitting
+──────────────────────────────────────────────────────────────────────
+
+Loading corpus from data/ splits …
+  Loaded 2887 clean prompts across all datasets.
+  Routable corpus : 2348 prompts
+  Held-out (IFEval E8): 539 prompts
+
+Generating noisy twins for 300 prompts …
+  … 50/300 prompts perturbed
+  … 100/300 prompts perturbed
+  … 150/300 prompts perturbed
+  … 200/300 prompts perturbed
+  … 250/300 prompts perturbed
+  … 300/300 prompts perturbed
+  → Created 900 perturbed twins.
+
+[3m                Phase 2 Group-Aware Corpus Summary                 [0m
+┏━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃[1m [0m[1mSplit        [0m[1m [0m┃[1m [0m[1mUnique Groups[0m[1m [0m┃[1m [0m[1mTotal Prompts[0m[1m [0m┃[1m [0m[1m Leakage Check [0m[1m [0m┃
+┡━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│[36m [0m[36mTrain        [0m[36m [0m│          1408 │[32m [0m[32m         1918[0m[32m [0m│[1;32m [0m[1;32m0 LEAKS (PASS) [0m[1;32m [0m│
+│[36m [0m[36mCalibration  [0m[36m [0m│           469 │[32m [0m[32m          658[0m[32m [0m│[1;32m [0m[1;32m0 LEAKS (PASS) [0m[1;32m [0m│
+│[36m [0m[36mTest         [0m[36m [0m│           471 │[32m [0m[32m          672[0m[32m [0m│[1;32m [0m[1;32m0 LEAKS (PASS) [0m[1;32m [0m│
+│[36m [0m[36mHeld-out (E8)[0m[36m [0m│           539 │[32m [0m[32m          539[0m[32m [0m│[1;32m [0m[1;32mHELD-OUT (PASS)[0m[1;32m [0m│
+│[36m [0m[1;36mTOTAL[0m[36m        [0m[36m [0m│             — │[32m [0m[32m         3787[0m[32m [0m│[1;32m [0m[1;32m               [0m[1;32m [0m│
+└───────────────┴───────────────┴───────────────┴─────────────────┘
+[3m      Dataset Distribution Across Splits       [0m
+┏━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━┳━━━━━━┳━━━━━━━━━┓
+┃[1m [0m[1mDataset     [0m[1m [0m┃[1m [0m[1mTrain[0m[1m [0m┃[1m [0m[1mCal[0m[1m [0m┃[1m [0m[1mTest[0m[1m [0m┃[1m [0m[1mHeldout[0m[1m [0m┃
+┡━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━╇━━━━━━╇━━━━━━━━━┩
+│[36m [0m[36marc_easy    [0m[36m [0m│   357 │ 135 │  137 │       0 │
+│[36m [0m[36mbfcl        [0m[36m [0m│   109 │  44 │   45 │       0 │
+│[36m [0m[36mbigcodebench[0m[36m [0m│   117 │  52 │   45 │       0 │
+│[36m [0m[36mgsm8k       [0m[36m [0m│   329 │ 110 │  130 │       0 │
+│[36m [0m[36mhumaneval   [0m[36m [0m│   135 │  59 │   49 │       0 │
+│[36m [0m[36mifeval      [0m[36m [0m│     0 │   0 │    0 │     539 │
+│[36m [0m[36mmmlu        [0m[36m [0m│   380 │ 126 │  111 │       0 │
+│[36m [0m[36mmmlu_pro    [0m[36m [0m│   323 │  99 │  108 │       0 │
+│[36m [0m[36mwildchat    [0m[36m [0m│   168 │  33 │   47 │       0 │
+└──────────────┴───────┴─────┴──────┴─────────┘
+
+[1;32m✓ Phase [0m[1;32m2[0m[1;32m Data Pipeline complete. [0m[1;32m3787[0m[1;32m total prompts.[0m
+

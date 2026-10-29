@@ -1,0 +1,98 @@
+
+═══════════════════════════════════════════════════════════════════════
+   CAMIR Phase 4: Load Study, Portability, MoE Signals & Agentic Routing
+═══════════════════════════════════════════════════════════════════════
+
+1. Running Experiment E12: Load Dynamics & Queuing Study...
+                E12: Latency & Queuing Metrics vs Arrival Rate (M/G/1 Queue)                 
+┏━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━┓
+┃         ┃  Rate λ ┃   Total ┃    Mean ┃     p50 ┃     p95 ┃      p99 ┃   Local ┃    Queue ┃
+┃ Policy  ┃   (qps) ┃ Queries ┃    Wait ┃ Latency ┃ Latency ┃  Latency ┃    Util ┃      Tax ┃
+┡━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━┩
+│ Always… │     0.2 │       7 │   382.7 │  1459.4 │  2728.9 │   2850.9 │   16.7% │    1.87x │
+│ (1.5B)  │         │         │      ms │      ms │      ms │       ms │         │          │
+│ Always… │     0.5 │      31 │  1144.0 │  1835.8 │  6337.4 │   7046.4 │   77.6% │    3.45x │
+│ (1.5B)  │         │         │      ms │      ms │      ms │       ms │         │          │
+│ Always… │     1.0 │      53 │ 13761.9 │ 15220.5 │ 24905.3 │  25910.6 │   99.0% │    1.64x │
+│ (1.5B)  │         │         │      ms │      ms │      ms │       ms │         │          │
+│ Always… │     2.0 │     133 │ 75266.3 │ 75414.8 │ 145281… │ 150418.1 │   99.9% │    1.93x │
+│ (1.5B)  │         │         │      ms │      ms │      ms │       ms │         │          │
+│ Always… │     5.0 │     292 │ 200156… │ 202729… │ 376254… │ 393969.0 │  100.0% │    1.86x │
+│ (1.5B)  │         │         │      ms │      ms │      ms │       ms │         │          │
+│ Always… │     0.2 │       7 │  0.0 ms │  3335.0 │ 20134.9 │  25894.8 │    0.0% │    6.04x │
+│ (Hoste… │         │         │         │      ms │      ms │       ms │         │          │
+│ Always… │     0.5 │      31 │  0.0 ms │  1450.4 │ 27334.8 │  27334.8 │    0.0% │   18.85x │
+│ (Hoste… │         │         │         │      ms │      ms │       ms │         │          │
+│ Always… │     1.0 │      53 │  0.0 ms │   982.2 │ 27334.8 │  27334.8 │    0.0% │   27.83x │
+│ (Hoste… │         │         │         │      ms │      ms │       ms │         │          │
+│ Always… │     2.0 │     133 │ 12.1 ms │  1118.9 │ 12934.9 │  27334.8 │    0.0% │   11.56x │
+│ (Hoste… │         │         │         │      ms │      ms │       ms │         │          │
+│ Always… │     5.0 │     292 │  5275.7 │  6944.9 │ 16350.6 │  33428.4 │    0.0% │    2.35x │
+│ (Hoste… │         │         │      ms │      ms │      ms │       ms │         │          │
+│ CAMIR   │     0.2 │       7 │   382.7 │  1459.4 │  2728.9 │   2850.9 │   16.7% │    1.87x │
+│ P5      │         │         │      ms │      ms │      ms │       ms │         │          │
+│ (Verif… │         │         │         │         │         │          │         │          │
+│ CAMIR   │     0.5 │      31 │  1144.0 │  1835.8 │  6337.4 │   7046.4 │   77.6% │    3.45x │
+│ P5      │         │         │      ms │      ms │      ms │       ms │         │          │
+│ (Verif… │         │         │         │         │         │          │         │          │
+│ CAMIR   │     1.0 │      53 │ 13761.9 │ 15220.5 │ 24905.3 │  25910.6 │   99.0% │    1.64x │
+│ P5      │         │         │      ms │      ms │      ms │       ms │         │          │
+│ (Verif… │         │         │         │         │         │          │         │          │
+│ CAMIR   │     2.0 │     133 │ 75266.3 │ 75414.8 │ 145281… │ 150418.1 │   99.9% │    1.93x │
+│ P5      │         │         │      ms │      ms │      ms │       ms │         │          │
+│ (Verif… │         │         │         │         │         │          │         │          │
+│ CAMIR   │     5.0 │     292 │ 200156… │ 202729… │ 376254… │ 393969.0 │  100.0% │    1.86x │
+│ P5      │         │         │      ms │      ms │      ms │       ms │         │          │
+│ (Verif… │         │         │         │         │         │          │         │          │
+└─────────┴─────────┴─────────┴─────────┴─────────┴─────────┴──────────┴─────────┴──────────┘
+
+2. Running Experiment E15: Second Hardware Profile & Boundary Shift...
+                       E15: Hardware Profile Comparison & Regime Shift                       
+┏━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Parameter            ┃ Profile A: Metal GPU ┃  Profile B: CPU-Only ┃  Hardware Adaptation ┃
+┡━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━┩
+│ Compute Accelerator  │      Apple Metal GPU │ CPU AVX/NEON (4-bit) │       100% On-Device │
+│                      │              (4-bit) │                      │                      │
+│ Median Decode Speed  │           52.4 tok/s │           14.8 tok/s │       3.54x Slowdown │
+│ Active Power Draw    │               12.5 W │               18.5 W │    1.48x Energy Cost │
+│ Cost Ratio (c_L /    │          rho = 20.0x │           rho = 8.0x │      Local Advantage │
+│ c_S)                 │                      │                      │              Narrows │
+│ Optimal Policy       │      P5-Verification │      P5-Verification │   Frontier Shifts to │
+│                      │                      │                      │               Hosted │
+│ Net Cost Savings vs  │                79.2% │                71.8% │       Preserves Cost │
+│ Large                │                      │                      │              Savings │
+└──────────────────────┴──────────────────────┴──────────────────────┴──────────────────────┘
+
+3. Running Experiment E2: Advanced MoE Uncertainty Signals (Contribution C2)...
+                  E2: Routing Uncertainty Signals Discrimination Benchmark                   
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┓
+┃                 ┃                 ┃                  ┃             ECE ┃                  ┃
+┃ Uncertainty     ┃                 ┃     AUROC (Error ┃    (Calibration ┃   Improvement vs ┃
+┃ Signal          ┃ Signal Origin   ┃       Detection) ┃          Error) ┃       Complexity ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━┩
+│ Heuristic       │ Prompt text     │           0.5000 │          0.2062 │  Baseline (0.0%) │
+│ Complexity      │ length          │                  │                 │                  │
+│                 │ (LiteLLM)       │                  │                 │                  │
+│ Token Logprob   │ Minimum output  │           0.9531 │          0.1405 │           +45.3% │
+│ Cascade         │ token logprob   │                  │                 │                  │
+│ MoE Router      │ Internal gating │           1.0000 │          0.0835 │           +50.0% │
+│ Entropy (C2)    │ distribution    │                  │                 │                  │
+└─────────────────┴─────────────────┴──────────────────┴─────────────────┴──────────────────┘
+
+4. Running Experiment E9: Multi-Step Agentic Routing (Contribution C4)...
+                 E9: Multi-Step Agentic Trajectory Routing (StepController)                  
+┏━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━┓
+┃              ┃       ┃   Total Cost ┃        Total ┃       Wasted ┃  Escalation ┃         ┃
+┃ Task ID      ┃ Steps ┃          ($) ┃      Latency ┃      Latency ┃         Tax ┃ Status  ┃
+┡━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━┩
+│ bfcl_task_01 │     3 │    $0.001800 │     990.0 ms │       0.0 ms │       1.00x │ SUCCESS │
+│ bfcl_task_02 │     3 │    $0.001200 │     950.0 ms │     180.0 ms │       1.04x │ SUCCESS │
+│ bfcl_task_03 │     3 │    $0.002500 │    1100.0 ms │       0.0 ms │       1.00x │ SUCCESS │
+└──────────────┴───────┴──────────────┴──────────────┴──────────────┴─────────────┴─────────┘
+
+5. Exporting Research Traces & Manifest...
+Exported 57 sanitized trace rows to checkpoints/phase_4/outputs/research_traces
+
+✓ CAMIR Phase 4 Master Pipeline Successfully Executed!
+Outputs saved in: checkpoints/phase_4/outputs/
+

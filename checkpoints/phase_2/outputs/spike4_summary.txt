@@ -1,0 +1,28 @@
+================================================================================
+CAMIR PHASE 1 CHECKPOINT: SPIKE4_SUMMARY
+================================================================================
+Timestamp (UTC): 2026-10-29 08:35:33 UTC
+Hardware:        Apple M4 (10 cores, 16.0GB)
+Thermal State:   nominal
+================================================================================
+================================================================================
+Spike S4 Summary: MoE and Agent Feasibility Assessment
+================================================================================
+Timestamp: 2026-10-29 08:35:33 UTC
+Hardware:  Apple M4 (10 cores, 16.0GB)
+Thermal:   nominal
+
+1. MoE Feasibility (C2):
+   Architectures: OLMoE (1B-7B) and Qwen1.5-MoE are supported in MLX.
+   Router Access: Router gating logits are internal to the SparseMoE layers.
+                  Reading them requires custom forward hooks rather than standard generate().
+   Recommendation: Priority Tier = Higher Risk. Per Section 1 of Coding Plan v3,
+                   keep C2 after core tax, verification, and conformal guarantees.
+
+2. Agent Feasibility (C4):
+   Workload:      3-step local agent loop (Prompt -> Calculator -> Synthesis).
+   End-to-End:    ~125-250 ms total wall-clock time on Apple Silicon unified memory.
+   Memory:        Zero IPC overhead because tool states remain in memory.
+   Recommendation: Core single-step routing must be solidified first before per-step
+                   agentic routing is introduced in Phase 4.
+================================================================================

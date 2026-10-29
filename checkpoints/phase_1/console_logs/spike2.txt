@@ -1,0 +1,34 @@
+─────────────────────── Spike S2: Hosted API Integration & Idempotent Zero-Spend Cache ───────────────────────
+Tier:        large (accounts/fireworks/models/qwen3p8-max)
+Provider:    Fireworks AI (https://api.fireworks.ai/inference/v1)
+Mode:        Live Hosted API
+Prompts:     5
+Spend Cap:   $0.0500 USD
+
+                      Pass 1: Live / Execution Run (Populate Cache)                      
+┏━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┓
+┃ Prompt ID ┃ Tokens (In/Out) ┃ Latency (ms) ┃ Cost (USD) ┃ Log-probs? ┃ Output Preview ┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━┩
+│ s2_p01    │ 78/16           │ 800.6 ms     │ $0.000085  │ YES        │ ''             │
+│ s2_p02    │ 80/16           │ 501.0 ms     │ $0.000086  │ YES        │ ''             │
+│ s2_p03    │ 90/16           │ 505.9 ms     │ $0.000095  │ YES        │ ''             │
+│ s2_p04    │ 87/16           │ 469.1 ms     │ $0.000093  │ YES        │ ''             │
+│ s2_p05    │ 72/16           │ 419.5 ms     │ $0.000079  │ YES        │ ''             │
+└───────────┴─────────────────┴──────────────┴────────────┴────────────┴────────────────┘
+Total Pass 1 Spend: $0.000438 USD
+
+         Pass 2: Replay Run (MUST hit SQLite Cache at $0.00 Cost)         
+┏━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━┓
+┃ Prompt ID ┃ Source           ┃ Latency (ms) ┃ Cost (USD) ┃ Cache Match ┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━┩
+│ s2_p01    │ SQLite Cache HIT │ 0.76 ms      │ $0.000000  │ EXACT       │
+│ s2_p02    │ SQLite Cache HIT │ 0.45 ms      │ $0.000000  │ EXACT       │
+│ s2_p03    │ SQLite Cache HIT │ 0.37 ms      │ $0.000000  │ EXACT       │
+│ s2_p04    │ SQLite Cache HIT │ 0.38 ms      │ $0.000000  │ EXACT       │
+│ s2_p05    │ SQLite Cache HIT │ 0.34 ms      │ $0.000000  │ EXACT       │
+└───────────┴──────────────────┴──────────────┴────────────┴─────────────┘
+Total Pass 2 Additional Spend: $0.000000 USD (Guaranteed Zero)
+
+✓ Spike S2 Passed: Hosted API idempotent caching and spending cap verified.
+Checkpoint saved: /Users/abhishekdarji/MyDrive/CAMIR/checkpoints/phase_1/outputs/spike2_summary.txt
+

@@ -225,7 +225,9 @@ class LocalMLXTier(BaseTier):
             finish_reason="stop" if len(generated_tokens) < max_tokens else "length",
             energy_j=energy_ctx.energy_j,
             energy_method=energy_ctx.energy_method,
+            hardware_profile="apple_silicon",
         )
+
 
 
 class MediumMLXTier(LocalMLXTier):

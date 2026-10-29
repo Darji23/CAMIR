@@ -1,0 +1,23 @@
+
+───────────────────────────────────────────────────────────────────────
+       Spike S6: Verifier Access & Prefill Scoring Feasibility        
+───────────────────────────────────────────────────────────────────────
+Testing Hosted API log-prob scoring on supplied text...
+
+1. Hosted Verifier Access (accounts/fireworks/models/qwen3p8-max):
+   Supported: True
+   Detail:    Supported via chat prefill
+
+2. Local Medium Tier (Qwen2.5-7B) Prefill Teacher-Forcing Pass:
+   Loading mlx-community/Qwen2.5-7B-Instruct-4bit for prefill scoring...
+                   Spike S6: Local Verifier Log-Prob Scoring vs Answer Quality                    
+┏━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Case ID ┃ Correct Ans Mean LogP ┃ Wrong Ans Mean LogP ┃ Score Margin ┃ Prefill Time ┃   Energy ┃
+┡━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ arc_001 │                -6.837 │             -11.190 │       +4.353 │    1393.6 ms │ 17.420 J │
+│ gsm_001 │                -1.474 │              -5.021 │       +3.548 │    1447.5 ms │ 18.094 J │
+└─────────┴───────────────────────┴─────────────────────┴──────────────┴──────────────┴──────────┘
+
+✓ Spike S6 Complete: Verifier access tested and documented.
+Checkpoint saved: checkpoints/phase_2/outputs/spike6_summary.txt
+

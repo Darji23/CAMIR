@@ -1,0 +1,17 @@
+================================================================================
+CAMIR PHASE 4 CHECKPOINT: E2_MOE_SIGNALS
+================================================================================
+Timestamp (UTC): 2026-10-29 09:17:42 UTC
+Hardware:        Apple M4 (10 cores, 16.0GB)
+Thermal State:   nominal
+================================================================================
+================================================================================
+CAMIR Phase 4 Experiment E2: Advanced MoE Uncertainty Signals (Contribution C2)
+================================================================================
+Evaluated Samples: 20
+Heuristic Complexity:   AUROC=0.5000 | ECE=0.2062
+Token Logprob Cascade:  AUROC=0.9531 | ECE=0.1405
+MoE Router Entropy (C2): AUROC=1.0000 | ECE=0.0835
+Finding: Internal MoE router entropy yields superior error discrimination over
+surface-level output tokens, allowing earlier and more accurate escalation decisions.
+================================================================================

@@ -1,0 +1,29 @@
+
+───────────────────────────────────────────────────────────────────────
+       Spike S4: MoE & Multi-Step Agentic Feasibility Assessment       
+───────────────────────────────────────────────────────────────────────
+Checking MoE support in MLX-LM...
+
+1. MoE Architecture & Router Logits Feasibility (C2):
+   Status: FEASIBLE_WITH_HOOKS
+   Supported Models: OlmoeForCausalLM, Qwen2MoeForCausalLM
+   Router Logits Detail: Standard mlx_lm.generate() abstracts the forward pass and returns sampled tokens. 
+Exposing internal router gating logits requires hooking into model.layers.block_sparse_moe.gate or subclassing
+the forward pass. Feasible with custom generator wrapper.
+Simulating 3-step tool-calling agent interaction...
+
+2. Lightweight Multi-Step Tool-Use Benchmark (C4):
+   Spike S4: Simulated Agent Multi-Step Loop on Apple   
+                        Silicon                         
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━┓
+┃ Step Description             ┃ Tokens ┃ Latency (ms) ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━┩
+│ 1. Analyze & Select Tool     │     25 │     45.03 ms │
+│ 2. Execute Tool (Calculator) │      0 │      6.28 ms │
+│ 3. Synthesize Final Answer   │     42 │     85.02 ms │
+└──────────────────────────────┴────────┴──────────────┘
+   Total Multi-Step Latency: 136.34 ms (~67 tokens)
+
+✓ Spike S4 Complete: Feasibility boundaries documented.
+Checkpoint saved: checkpoints/phase_2/outputs/spike4_summary.txt
+

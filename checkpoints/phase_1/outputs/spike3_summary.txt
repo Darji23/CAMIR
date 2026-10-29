@@ -1,0 +1,20 @@
+================================================================================
+CAMIR PHASE 1 CHECKPOINT: SPIKE3_SUMMARY
+================================================================================
+Timestamp (UTC): 2026-10-29 08:31:10 UTC
+Hardware:        Apple M4 (10 cores, 16.0GB)
+Thermal State:   nominal
+--------------------------------------------------------------------------------
+METADATA & PARAMETERS:
+  status: PASSED
+  hardware: Apple M4 (10 cores, 16.0GB)
+================================================================================
+Spike S3 Energy Profile Findings:
+- Hardware: Apple M4 (10 cores, 16.0GB)
+- Thermal State: nominal
+- Primary Active Power Model: 12.5 W (constant active)
+- Labeling Enforced: Energy is explicitly labeled 'estimated' across all rows
+- Short Burst Energy: 0.8375 J (0.067 s)
+- Medium Burst Energy: 3.4705 J (0.278 s)
+- Powermetrics Mode Result: 2.2863 J (estimated, 12.5W)
+- Strict Rule Enforced: Joules are kept independent and never added to dollars or seconds

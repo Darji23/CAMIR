@@ -41,10 +41,15 @@ TRACES_DIR = Path(__file__).resolve().parent.parent / "traces"
 
 
 def extract_mc_answer_logprob(logprobs: List[TokenLogprob]) -> Optional[float]:
-    """Extract log-probability of the answer choice token (A, B, C, D) for multiple-choice tasks."""
+    """Extract log-probability of the answer choice token (A, B, C, D) for multiple-choice tasks.
+
+    Scans the first 20 output tokens to handle models that prefix the answer
+    with a preamble (e.g. 'The answer is B' -> B is token 4, not token 0).
+    Returns the logprob of the first A/B/C/D token found, or None if not found.
+    """
     if not logprobs:
         return None
-    for lp in logprobs[:5]:
+    for lp in logprobs[:20]:
         token_clean = lp.token_str.strip().strip("():.").upper()
         if token_clean in {"A", "B", "C", "D"}:
             return lp.logprob
@@ -52,7 +57,6 @@ def extract_mc_answer_logprob(logprobs: List[TokenLogprob]) -> Optional[float]:
 
 
 def run_smoke_pipeline(
-    mock_local: bool = False,
     skip_medium: bool = False,
     max_prompts: int = 20,
 ):
@@ -77,36 +81,27 @@ def run_smoke_pipeline(
 
         store = TraceStore(db_path=TRACES_DIR / "camir_traces.sqlite")
 
-        # Initialize Tiers
+        # Initialize Tiers (all real models, mock eliminated)
         hosted_tier = HostedAPITier(
-            model_id="qwen/qwen-2.5-72b-instruct",
             tier_name="large",
         )
-        console.print(f"Large Tier:  [green]{hosted_tier.model_id}[/green] ({'Mock Mode' if hosted_tier.is_mock else 'Live Hosted API'})")
+        provider_name = "Fireworks AI" if ("fireworks" in (hosted_tier.base_url or "").lower() or "fireworks" in hosted_tier.model_id.lower()) else "OpenAI-compatible"
+        console.print(f"Large Tier:  [green]{hosted_tier.model_id}[/green] (Live API via {provider_name})")
 
-        if not mock_local:
-            small_tier = LocalMLXTier(
-                model_id="mlx-community/Qwen2.5-1.5B-Instruct-4bit",
-                tier_name="small",
+        small_tier = LocalMLXTier(
+            model_id="mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+            tier_name="small",
+        )
+        console.print(f"Small Tier:  [green]{small_tier.model_id}[/green] (MLX-LM Local)")
+        if not skip_medium:
+            medium_tier = MediumMLXTier(
+                model_id="mlx-community/Qwen2.5-7B-Instruct-4bit",
+                tier_name="medium",
             )
-            console.print(f"Small Tier:  [green]{small_tier.model_id}[/green] (MLX-LM Local)")
-            if not skip_medium:
-                medium_tier = MediumMLXTier(
-                    model_id="mlx-community/Qwen2.5-7B-Instruct-4bit",
-                    tier_name="medium",
-                )
-                console.print(f"Medium Tier: [green]{medium_tier.model_id}[/green] (MLX-LM Local, P5 verifier fallback)")
-            else:
-                medium_tier = None
-                console.print("Medium Tier: [yellow]Skipped via --skip-medium[/yellow]")
+            console.print(f"Medium Tier: [green]{medium_tier.model_id}[/green] (MLX-LM Local, P5 verifier fallback)")
         else:
-            small_tier = None
             medium_tier = None
-            console.print("Small Tier:  [yellow]Fast Mock Mode (--mock-local enabled)[/yellow]")
-            if not skip_medium:
-                console.print("Medium Tier: [yellow]Fast Mock Mode (--mock-local enabled)[/yellow]")
-            else:
-                console.print("Medium Tier: [yellow]Skipped via --skip-medium[/yellow]")
+            console.print("Medium Tier: [yellow]Skipped via --skip-medium[/yellow]")
 
         results_table = Table(title="Smoke Pipeline Multi-Tier Execution Summary")
         results_table.add_column("Prompt ID", style="cyan")
@@ -140,16 +135,11 @@ def run_smoke_pipeline(
                 "seed": 42,
                 "quantization": "4bit",
                 "prompt_template": "chat_instruct",
+                "hardware_profile": "apple_silicon",
             }
             hash_small = compute_config_hash(config_small)
 
-            if small_tier is not None:
-                res_s = small_tier.generate(prompt=prompt_text, max_tokens=64, temperature=0.0, seed=42)
-            else:
-                res_s = hosted_tier._generate_mock(prompt_text, max_tokens=64)
-                res_s.model_id = "mlx-community/Qwen2.5-1.5B-Instruct-4bit"
-                res_s.energy_j = 0.42
-                res_s.energy_method = "estimated"
+            res_s = small_tier.generate(prompt=prompt_text, max_tokens=128, temperature=0.0, seed=42)
 
             mean_lp_s = sum(lp.logprob for lp in res_s.logprobs) / len(res_s.logprobs) if res_s.logprobs else None
             min_lp_s = min((lp.logprob for lp in res_s.logprobs), default=None)
@@ -179,13 +169,16 @@ def run_smoke_pipeline(
                 t_total_s=round(res_s.timing.t_total_s, 4),
                 tpot_s=round(res_s.timing.tpot_s, 4),
                 energy_j=round(res_s.energy_j, 4) if res_s.energy_j else None,
-                energy_method="estimated",
+                energy_method=res_s.energy_method,
                 cache_disabled=True,
                 thermal_state=get_thermal_state(),
+                hardware_profile=res_s.hardware_profile,
                 hardware_info=hw_info,
             )
+
             store.save_trace(row_small, overwrite=True)
             validated_count += 1
+            cost_s = calculate_token_cost(res_s.model_id, res_s.prompt_tokens, res_s.output_tokens)
             results_table.add_row(
                 prompt_id[:16],
                 dataset,
@@ -195,7 +188,7 @@ def run_smoke_pipeline(
                 f"{row_small.t_ttft_s * 1000:.1f}",
                 f"{row_small.t_total_s * 1000:.1f}",
                 f"{row_small.energy_j:.2f} J" if row_small.energy_j else "N/A",
-                "$0.0000",
+                f"local (${cost_s:.2f})",
                 "VALID",
             )
 
@@ -211,16 +204,11 @@ def run_smoke_pipeline(
                     "seed": 42,
                     "quantization": "4bit",
                     "prompt_template": "chat_instruct",
+                    "hardware_profile": "apple_silicon",
                 }
                 hash_med = compute_config_hash(config_med)
 
-                if medium_tier is not None:
-                    res_m = medium_tier.generate(prompt=prompt_text, max_tokens=64, temperature=0.0, seed=42)
-                else:
-                    res_m = hosted_tier._generate_mock(prompt_text, max_tokens=64)
-                    res_m.model_id = "mlx-community/Qwen2.5-7B-Instruct-4bit"
-                    res_m.energy_j = 0.95
-                    res_m.energy_method = "estimated"
+                res_m = medium_tier.generate(prompt=prompt_text, max_tokens=128, temperature=0.0, seed=42)
 
                 mean_lp_m = sum(lp.logprob for lp in res_m.logprobs) / len(res_m.logprobs) if res_m.logprobs else None
                 min_lp_m = min((lp.logprob for lp in res_m.logprobs), default=None)
@@ -250,13 +238,16 @@ def run_smoke_pipeline(
                     t_total_s=round(res_m.timing.t_total_s, 4),
                     tpot_s=round(res_m.timing.tpot_s, 4),
                     energy_j=round(res_m.energy_j, 4) if res_m.energy_j else None,
-                    energy_method="estimated",
+                    energy_method=res_m.energy_method,
                     cache_disabled=True,
                     thermal_state=get_thermal_state(),
+                    hardware_profile=res_m.hardware_profile,
                     hardware_info=hw_info,
                 )
+
                 store.save_trace(row_med, overwrite=True)
                 validated_count += 1
+                cost_m = calculate_token_cost(res_m.model_id, res_m.prompt_tokens, res_m.output_tokens)
                 results_table.add_row(
                     prompt_id[:16],
                     dataset,
@@ -266,7 +257,7 @@ def run_smoke_pipeline(
                     f"{row_med.t_ttft_s * 1000:.1f}",
                     f"{row_med.t_total_s * 1000:.1f}",
                     f"{row_med.energy_j:.2f} J" if row_med.energy_j else "N/A",
-                    "$0.0000",
+                    f"local (${cost_m:.2f})",
                     "VALID",
                 )
 
@@ -281,9 +272,23 @@ def run_smoke_pipeline(
                 "seed": 42,
                 "quantization": "fp16",
                 "prompt_template": "chat_instruct",
+                "hardware_profile": "cloud",
             }
             hash_large = compute_config_hash(config_large)
-            res_l = hosted_tier.generate(prompt=prompt_text, max_tokens=64, temperature=0.0, seed=42)
+            # For MC tasks, instruct the model to answer with only the letter
+            # so the A/B/C/D token appears early in the output (aids logprob extraction)
+            mc_system_prompt = (
+                "You are a concise answer assistant. For multiple-choice questions, "
+                "respond with ONLY the single letter of the correct answer (A, B, C, or D). "
+                "Do not add any explanation."
+            ) if is_mc else None
+            res_l = hosted_tier.generate(
+                prompt=prompt_text,
+                max_tokens=64,
+                temperature=0.0,
+                seed=42,
+                system_prompt=mc_system_prompt,
+            )
             cost_l = calculate_token_cost(hosted_tier.model_id, res_l.prompt_tokens, res_l.output_tokens)
             ans_lp_l = extract_mc_answer_logprob(res_l.logprobs) if is_mc else None
 
@@ -306,13 +311,16 @@ def run_smoke_pipeline(
                 t_total_s=round(res_l.timing.t_total_s, 4),
                 tpot_s=round(res_l.timing.tpot_s, 4),
                 energy_j=0.0,
-                energy_method="estimated",
+                energy_method=res_l.energy_method,
                 cache_disabled=True,
                 thermal_state=get_thermal_state(),
+                hardware_profile=res_l.hardware_profile,
                 hardware_info=hw_info,
             )
+
             store.save_trace(row_large, overwrite=True)
             validated_count += 1
+            cost_label_l = f"${cost_l:.8f}" if cost_l > 0 else "$0.00000000"
             results_table.add_row(
                 prompt_id[:16],
                 dataset,
@@ -322,7 +330,7 @@ def run_smoke_pipeline(
                 f"{row_large.t_ttft_s * 1000:.1f}",
                 f"{row_large.t_total_s * 1000:.1f}",
                 "0.00 J",
-                f"${cost_l:.6f}",
+                cost_label_l,
                 "VALID",
             )
 
@@ -348,7 +356,6 @@ def run_smoke_pipeline(
             output_name="smoke_summary",
             content=summary_text,
             metadata={
-                "mock_local": mock_local,
                 "skip_medium": skip_medium,
                 "max_prompts": max_prompts,
                 "validated_rows": validated_count,
@@ -365,13 +372,11 @@ def run_smoke_pipeline(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run CAMIR Phase 1 smoke test suite.")
-    parser.add_argument("--mock-local", action="store_true", help="Run local tiers in mock mode for fast testing.")
     parser.add_argument("--skip-medium", action="store_true", help="Skip medium tier.")
     parser.add_argument("--max-prompts", type=int, default=20, help="Max prompts to run (default 20).")
     args = parser.parse_args()
 
     run_smoke_pipeline(
-        mock_local=args.mock_local,
         skip_medium=args.skip_medium,
         max_prompts=args.max_prompts,
     )

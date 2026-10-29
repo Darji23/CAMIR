@@ -100,6 +100,11 @@ def test_config_hash_covers_all_fields():
     c_ver = dict(base_config, library_versions={"mlx": "0.23.0", "python": "3.11.0"})
     assert compute_config_hash(c_ver) != base_hash
 
+    # 7. Altering hardware_profile must change hash
+    c_hw = dict(base_config, hardware_profile="nvidia")
+    assert compute_config_hash(c_hw) != base_hash
+
+
 
 def test_trace_store_lifecycle():
     with tempfile.TemporaryDirectory() as tmpdir:

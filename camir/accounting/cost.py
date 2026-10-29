@@ -8,7 +8,15 @@ from typing import Dict, Tuple
 
 # Pricing in USD per 1 Million tokens: (input_price_per_1M, output_price_per_1M)
 MODEL_PRICING_CATALOG: Dict[str, Tuple[float, float]] = {
-    # Hosted Large Tier
+    # Hosted Large Tier - Fireworks AI (current)
+    "accounts/fireworks/models/qwen3p8-max": (0.90, 0.90),
+    "qwen3p8-max": (0.90, 0.90),
+    # Hosted Large Tier - Fireworks AI (deprecated - no longer available)
+    "accounts/fireworks/models/qwen2p5-72b-instruct": (0.90, 0.90),
+    "fireworks/qwen2p5-72b-instruct": (0.90, 0.90),
+    "qwen2p5-72b-instruct": (0.90, 0.90),
+    "accounts/fireworks/models/qwen-2.5-72b-instruct": (0.90, 0.90),
+    # Hosted Large Tier - OpenRouter / Together AI
     "qwen/qwen-2.5-72b-instruct": (0.35, 0.40),
     "qwen2.5-72b-instruct": (0.35, 0.40),
     "togethercomputer/qwen2.5-72b-instruct": (0.35, 0.40),

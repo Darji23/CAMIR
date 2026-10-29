@@ -1,0 +1,23 @@
+================================================================================
+CAMIR PHASE 1 CHECKPOINT: SPIKE2_SUMMARY
+================================================================================
+Timestamp (UTC): 2026-10-29 08:31:06 UTC
+Hardware:        Apple M4 (10 cores, 16.0GB)
+Thermal State:   nominal
+--------------------------------------------------------------------------------
+METADATA & PARAMETERS:
+  is_mock: False
+  model_id: accounts/fireworks/models/qwen3p8-max
+  pass1_spend_usd: 0.0004383
+  pass2_spend_usd: 0.0
+  logprobs_supported: True
+================================================================================
+Spike S2 Findings & Results:
+- Model ID: accounts/fireworks/models/qwen3p8-max (Live Hosted API)
+- Prompts Evaluated: 5
+- Pass 1 Total Cost: $0.000438 USD
+- Spending Cap: $0.0500 USD (enforced: spend < cap)
+- Log-probs Returned: YES
+- Pass 2 Replay Cost: $0.000000 USD (100% cache hit rate)
+- Replay Latency: < 5 ms per query
+- Idempotency: Verified by (prompt_id, tier, config_hash) index

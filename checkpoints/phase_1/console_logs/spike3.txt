@@ -1,0 +1,15 @@
+──────────────────────────── Spike S3: Apple Silicon Energy Measurement (Joules) ─────────────────────────────
+Hardware:      Apple M4 (10 cores, 16.0GB)
+Thermal State: nominal
+
+                     Energy Profile Across Workloads (Apple Silicon M4)                     
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Workload                  ┃ Duration (s) ┃ Energy (Joules) ┃ Method / Power              ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Short Burst (~16 tokens)  │ 0.067 s      │ 0.8375 J        │ 0.8375 J (estimated, 12.5W) │
+│ Medium Burst (~64 tokens) │ 0.278 s      │ 3.4705 J        │ 3.4705 J (estimated, 12.5W) │
+│ Powermetrics Test Burst   │ 0.183 s      │ 2.2863 J        │ 2.2863 J (estimated, 12.5W) │
+└───────────────────────────┴──────────────┴─────────────────┴─────────────────────────────┘
+✓ Spike S3 Passed: Energy is tracked in Joules without dimensional mixing.
+Checkpoint saved: /Users/abhishekdarji/MyDrive/CAMIR/checkpoints/phase_1/outputs/spike3_summary.txt
+

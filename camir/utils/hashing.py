@@ -14,6 +14,7 @@ import hashlib
 import json
 import platform
 from typing import Any, Dict, Optional
+from camir.utils.hardware import get_hardware_profile
 
 
 def get_library_versions() -> Dict[str, str]:
@@ -34,7 +35,7 @@ def compute_config_hash(config: Dict[str, Any]) -> str:
     """Compute a canonical SHA256 hash of generation parameters.
     
     Covers model, quantization, max tokens, temperature, prompt template,
-    library versions, and seed.
+    seed, library versions, and hardware_profile.
     """
     raw_versions = config.get("library_versions")
     if raw_versions is None:
@@ -51,6 +52,10 @@ def compute_config_hash(config: Dict[str, Any]) -> str:
         or "standard_instruct"
     )
 
+    hardware_profile = str(
+        config.get("hardware_profile") or get_hardware_profile()
+    ).strip().lower()
+
     normalized = {
         "model_id": str(config.get("model_id", "")).strip().lower(),
         "quantization": str(config.get("quantization", "none")).strip().lower(),
@@ -58,7 +63,9 @@ def compute_config_hash(config: Dict[str, Any]) -> str:
         "temperature": float(config.get("temperature", 0.0)),
         "seed": int(config.get("seed", 42)),
         "prompt_template": prompt_template,
+        "hardware_profile": hardware_profile,
         "library_versions": lib_versions,
     }
     encoded = json.dumps(normalized, sort_keys=True).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()[:16]
+

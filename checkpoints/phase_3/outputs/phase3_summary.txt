@@ -1,0 +1,23 @@
+================================================================================
+CAMIR PHASE 3 CHECKPOINT: PHASE3_SUMMARY
+================================================================================
+Timestamp (UTC): 2026-10-29 08:57:31 UTC
+Hardware:        Apple M4 (10 cores, 16.0GB)
+Thermal State:   nominal
+================================================================================
+================================================================================
+CAMIR Phase 3 Master Execution Summary
+================================================================================
+Timestamp: 2026-10-29 08:57:31 UTC
+Hardware:  Apple M4 (10 cores, 16.0GB)
+Thermal:   nominal
+
+Experiments Completed:
+- E3: Escalation Tax Measurement (Accountant W = c_S + g + c_L)
+- E4: Policy Frontiers (Always-S/M/L, Cascade, P3-SkipRule, P4-EarlyAbort, P5-Verification)
+- E8: Conformal Risk Control Calibration (Statistical Guarantee: Risk <= alpha)
+- E10: Week-6 Decision Gate (v_pass * c_L > c_V: PASSED with on-device verifier)
+- E11: Decision-Theoretic Regime Map (Optimal policy grid over rho and e)
+
+All deliverables for Phase 3 are complete and recorded.
+================================================================================

@@ -49,6 +49,13 @@ def test_cost_calculation():
     cost_small = calculate_token_cost("qwen/qwen-2.5-72b-instruct", 1000, 500)
     assert abs(cost_small - 0.00055) < 1e-6
 
+    # Fireworks Qwen2.5-72B pricing test ($0.90/1M in, $0.90/1M out)
+    cost_fw = calculate_token_cost("accounts/fireworks/models/qwen2p5-72b-instruct", 1_000_000, 1_000_000)
+    assert abs(cost_fw - 1.80) < 1e-5
+
+    cost_fw_batch = calculate_token_cost("accounts/fireworks/models/qwen2p5-72b-instruct", 1000, 500)
+    assert abs(cost_fw_batch - 0.00135) < 1e-6
+
 
 def test_timing_breakdown():
     timing = compute_timing_breakdown(

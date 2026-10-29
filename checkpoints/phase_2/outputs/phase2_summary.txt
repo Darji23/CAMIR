@@ -1,0 +1,25 @@
+================================================================================
+CAMIR PHASE 2 CHECKPOINT: PHASE2_SUMMARY
+================================================================================
+Timestamp (UTC): 2026-10-29 08:58:22 UTC
+Hardware:        Apple M4 (10 cores, 16.0GB)
+Thermal State:   nominal
+================================================================================
+================================================================================
+CAMIR Phase 2 Summary: Trace-First Data Pipeline and Baseline Frontiers
+================================================================================
+Timestamp: 2026-10-29 08:58:22 UTC
+Hardware:  Apple M4 (10 cores, 16.0GB)
+Thermal:   nominal
+Evaluated Test Prompts: 672
+
+Baseline Policy Evaluation Results:
+- always-small                        | Acc:  44.4% | Avg Cost: $0.000000 | p50: 1458.3 ms | Energy: 19.50 J | Tax: 1.00x
+- always-medium                       | Acc:  44.4% | Avg Cost: $0.000000 | p50: 6591.7 ms | Energy: 89.47 J | Tax: 1.00x
+- always-large                        | Acc:  38.9% | Avg Cost: $0.000236 | p50: 1078.3 ms | Energy:  0.00 J | Tax: 1.00x
+- random-mix                          | Acc:  44.4% | Avg Cost: $0.000011 | p50: 1825.0 ms | Energy: 45.32 J | Tax: 1.00x
+- oracle                              | Acc:  77.8% | Avg Cost: $0.000050 | p50: 1438.7 ms | Energy: 23.94 J | Tax: 1.00x
+- logprob-cascade (tau=-0.5)          | Acc:  38.9% | Avg Cost: $0.000236 | p50: 2676.4 ms | Energy: 19.50 J | Tax: 1.55x
+- complexity-router (LiteLLM-style)   | Acc:  44.4% | Avg Cost: $0.000218 | p50: 1196.5 ms | Energy:  3.49 J | Tax: 1.00x
+- feature-router (thresh=0.5)         | Acc:  50.0% | Avg Cost: $0.000192 | p50: 1225.7 ms | Energy:  6.25 J | Tax: 1.00x
+================================================================================

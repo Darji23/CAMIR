@@ -1,0 +1,22 @@
+================================================================================
+CAMIR PHASE 1 CHECKPOINT: SMOKE_SUMMARY
+================================================================================
+Timestamp (UTC): 2026-10-29 08:35:02 UTC
+Hardware:        Apple M4 (10 cores, 16.0GB)
+Thermal State:   nominal
+--------------------------------------------------------------------------------
+METADATA & PARAMETERS:
+  mock_local: False
+  skip_medium: False
+  max_prompts: 20
+  validated_rows: 54
+================================================================================
+Phase 1 Smoke Pipeline Execution Summary:
+- Prompts Processed: 18
+- Tiers Run: Small (Qwen-1.5B), Medium (Qwen-7B), Large (Qwen-72B)
+- Trace Rows Validated: 54/54
+- SQLite Database: /Users/abhishekdarji/MyDrive/CAMIR/traces/camir_traces.sqlite (54 total rows)
+- Parquet Export: /Users/abhishekdarji/MyDrive/CAMIR/traces/smoke_traces.parquet (54 rows)
+- Energy Accounting: Labeled estimated (12.5 W active power) across all local rows
+- Cache Status: Disabled across all inference calls
+- MC Answer Token Logprob: Recorded separately for ARC-Easy and MMLU

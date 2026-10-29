@@ -1,0 +1,22 @@
+{
+  "total_traces": 57,
+  "datasets": [
+    "arc_easy",
+    "bfcl",
+    "bigcodebench",
+    "gsm8k",
+    "humaneval",
+    "ifeval",
+    "mmlu",
+    "mmlu_pro",
+    "wildchat"
+  ],
+  "tiers": [
+    "large",
+    "medium",
+    "small"
+  ],
+  "license": "Apache-2.0",
+  "jsonl_path": "checkpoints/phase_4/outputs/research_traces/camir_research_traces.jsonl",
+  "parquet_path": "checkpoints/phase_4/outputs/research_traces/camir_research_traces.parquet"
+}

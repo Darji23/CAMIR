@@ -1,16 +1,76 @@
 {
   "seed": 42,
-  "total_prompts": 1364,
+  "total_prompts": 2905,
   "splits": {
-    "smoke": 20,
-    "train": 545,
-    "calibration": 272,
-    "test": 547
+    "smoke": 18,
+    "train": 1154,
+    "calibration": 577,
+    "test": 1156
   },
-  "datasets": {
-    "arc_easy": 400,
+  "datasets_total": {
     "mmlu": 400,
+    "bfcl": 200,
+    "arc_easy": 400,
     "gsm8k": 400,
-    "humaneval": 164
-  }
+    "humaneval": 164,
+    "mmlu_pro": 400,
+    "wildchat": 250,
+    "bigcodebench": 150,
+    "ifeval": 541
+  },
+  "datasets_by_split": {
+    "ifeval": {
+      "train": 209,
+      "calibration": 105,
+      "test": 225
+    },
+    "arc_easy": {
+      "train": 179,
+      "calibration": 55,
+      "test": 164
+    },
+    "bigcodebench": {
+      "train": 64,
+      "calibration": 40,
+      "test": 44
+    },
+    "bfcl": {
+      "train": 77,
+      "calibration": 41,
+      "test": 80
+    },
+    "humaneval": {
+      "train": 69,
+      "calibration": 32,
+      "test": 61
+    },
+    "mmlu": {
+      "train": 156,
+      "calibration": 74,
+      "test": 168
+    },
+    "mmlu_pro": {
+      "train": 147,
+      "calibration": 86,
+      "test": 165
+    },
+    "wildchat": {
+      "train": 115,
+      "calibration": 49,
+      "test": 84
+    },
+    "gsm8k": {
+      "train": 138,
+      "calibration": 95,
+      "test": 165
+    }
+  },
+  "scorer_types": [
+    "multiple_choice",
+    "math",
+    "code",
+    "tool_use",
+    "pairwise_judge",
+    "ifeval"
+  ]
 }

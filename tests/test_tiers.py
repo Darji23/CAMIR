@@ -10,25 +10,39 @@ from camir.traces.schema import TierResult
 from camir.utils.checkpoint import CheckpointManager, TeeCapture
 
 
-def test_hosted_tier_mock_contract():
+def test_hosted_tier_contract(monkeypatch):
+    monkeypatch.setenv("FIREWORKS_API_KEY", "fw_test_key_123")
     tier = HostedAPITier(
-        model_id="qwen/qwen-2.5-72b-instruct",
+        model_id="accounts/fireworks/models/qwen3p8-max",
         tier_name="large",
-        mock_mode=True,
     )
     assert tier.tier_name == "large"
-    assert tier.model_id == "qwen/qwen-2.5-72b-instruct"
-    assert tier.is_mock is True
+    assert tier.model_id == "accounts/fireworks/models/qwen3p8-max"
+    assert tier.is_mock is False
 
-    result = tier.generate("What is 10 + 10?", max_tokens=16)
-    assert isinstance(result, TierResult)
-    assert len(result.text) > 0
-    assert result.prompt_tokens > 0
-    assert result.output_tokens > 0
-    assert result.timing.t_total_s > 0.0
-    assert result.finish_reason == "stop"
-    assert result.energy_method == "estimated"
-    assert result.timing.cache_disabled is True
+
+def test_hosted_tier_requires_api_key(monkeypatch):
+    monkeypatch.setattr("camir.tiers.hosted_api.load_env", lambda *a, **k: None)
+    monkeypatch.delenv("FIREWORKS_API_KEY", raising=False)
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("TOGETHER_API_KEY", raising=False)
+    tier = HostedAPITier(api_key=None)
+    with pytest.raises(ValueError, match="Hosted API key not configured"):
+        _ = tier.client
+
+
+
+def test_fireworks_hosted_tier_resolution(monkeypatch):
+    """Verify HostedAPITier automatically resolves to Fireworks model and base_url when FIREWORKS_API_KEY is present."""
+    monkeypatch.setenv("FIREWORKS_API_KEY", "fw_test_key_123")
+    monkeypatch.delenv("OPENAI_BASE_URL", raising=False)
+    monkeypatch.delenv("HOSTED_MODEL_ID", raising=False)
+
+    tier = HostedAPITier(tier_name="large")
+    assert tier.model_id == "accounts/fireworks/models/qwen3p8-max"
+    assert tier.base_url == "https://api.fireworks.ai/inference/v1"
+    assert tier.is_mock is False
+    assert tier.tier_name == "large"
 
 
 def test_medium_tier_adapter_initialization():

@@ -1,0 +1,11 @@
+================================================================================
+CAMIR PHASE 3 CHECKPOINT: E3_TAX_MEASUREMENT
+================================================================================
+Timestamp (UTC): 2026-10-29 08:57:24 UTC
+Hardware:        Apple M4 (10 cores, 16.0GB)
+Thermal State:   nominal
+================================================================================
+E3 Escalation Tax Summary:
+Queries: 18 | Escalation Rate: 100.0%
+Wasted Latency: 28.08s | Wasted Cost: $0.000000 | Wasted Energy: 350.97J
+Latency Tax Multiplier: 2.45x | Energy Tax Multiplier: 1.00x

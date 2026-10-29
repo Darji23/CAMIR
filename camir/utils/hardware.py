@@ -28,6 +28,38 @@ def get_hardware_info() -> str:
     return f"{chip} ({cores} cores, {mem_str})"
 
 
+def get_hardware_profile() -> str:
+    """Return canonical hardware profile identifier.
+    
+    Returns one of: 'apple_silicon', 'nvidia', 'cpu_rapl', 'cloud', or 'generic_cpu'.
+    """
+    system = platform.system().lower()
+    machine = platform.machine().lower()
+
+    if system == "darwin" and ("arm" in machine or "m" in machine or "aarch64" in machine):
+        return "apple_silicon"
+
+    # Check for NVIDIA GPU
+    try:
+        import subprocess
+        res = subprocess.run(["nvidia-smi"], capture_output=True, timeout=1.0)
+        if res.returncode == 0:
+            return "nvidia"
+    except Exception:
+        pass
+
+    # Check for Intel/AMD RAPL
+    if os.path.exists("/sys/class/powercap/intel-rapl"):
+        return "cpu_rapl"
+
+    # Cloud environment heuristics (AWS, GCP, Azure, etc.)
+    cloud_indicators = ["AWS_EXECUTION_ENV", "KUBERNETES_SERVICE_HOST", "CLOUD_PROVIDER"]
+    if any(k in os.environ for k in cloud_indicators):
+        return "cloud"
+
+    return "generic_cpu"
+
+
 def get_thermal_state() -> str:
     """Return macOS thermal state: 'nominal', 'fair', 'serious', 'critical', or 'unknown'."""
     try:
@@ -43,3 +75,4 @@ def get_thermal_state() -> str:
         return "nominal"
     except Exception:
         return "nominal"
+

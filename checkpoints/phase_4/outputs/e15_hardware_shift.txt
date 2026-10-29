@@ -1,0 +1,16 @@
+================================================================================
+CAMIR PHASE 4 CHECKPOINT: E15_HARDWARE_SHIFT
+================================================================================
+Timestamp (UTC): 2026-10-29 09:17:42 UTC
+Hardware:        Apple M4 (10 cores, 16.0GB)
+Thermal State:   nominal
+================================================================================
+================================================================================
+CAMIR Phase 4 Experiment E15: Second Hardware Profile & Regime Boundary Shift
+================================================================================
+Host: Apple M4 (10 cores, 16.0GB)
+Profile A (Metal): rho=20.0x -> Optimal: P5-Verification (Savings: 79.2%)
+Profile B (CPU):   rho=8.0x  -> Optimal: P5-Verification (Savings: 71.8%)
+Key Finding: As local decode throughput drops on CPU, CAMIR's skip-rule automatically
+elevates its entry threshold, routing hard queries directly to hosted API.
+================================================================================
